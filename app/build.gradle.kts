@@ -1,6 +1,6 @@
 plugins {
-    alias(libs.plugins.androidApplication)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.android.application")
+    kotlin("android")
 }
 
 android {
@@ -33,6 +33,16 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
+    packagingOptions {
+        exclude ("META-INF/DEPENDENCIES")
+    }
+
+    sourceSets {
+        getByName("main") {
+            assets.srcDirs("src/custom/assets")
+        }
+    }
 }
 
 dependencies {
@@ -41,9 +51,21 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
-    implementation ("androidx.recyclerview:recyclerview:1.4.0")
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.volley)  // For network requests (if needed)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    // Google Play services Auth
+    implementation("com.google.android.gms:play-services-auth:19.0.0")
+
+    // Google API client for Android
+    implementation("com.google.api-client:google-api-client-android:1.31.5")
+
+    // Google Sheets API
+    implementation("com.google.apis:google-api-services-sheets:v4-rev581-1.25.0")
+
+    // Https library
+    implementation("com.google.http-client:google-http-client-android:1.39.2")
 }
